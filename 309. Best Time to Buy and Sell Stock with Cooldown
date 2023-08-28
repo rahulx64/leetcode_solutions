@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int solve(int ind,int siz,vector<int>& prices,int buy,vector<vector<int>> & dp){
+        if(ind>=siz) return 0;
+        if(dp[ind][buy] != -1) return dp[ind][buy];
+        int bu=0;
+        int sell=0;
+         if(buy==0){
+           bu=max(-(prices[ind])+solve(ind+1,siz,prices,1,dp),0+solve(ind+1,siz,prices,0,dp));
+         }
+         else if(buy==1){
+           sell=max(prices[ind]+solve(ind+2,siz,prices,0,dp),0+solve(ind+1,siz,prices,1,dp));
+         }
+         return dp[ind][buy] = max(bu,sell);
+
+    }
+
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+        int buy=0;
+        vector<vector<int>> dp(n+1,vector<int>(2,-1));
+        int x=solve(0,n,prices,0,dp);
+        return x;
+    }
+};
